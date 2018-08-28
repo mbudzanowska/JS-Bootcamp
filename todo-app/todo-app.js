@@ -15,12 +15,12 @@ document.querySelector('#search-todo').addEventListener('input', event => {
 document.querySelector('#new-todo').addEventListener('submit', function (e) {
     e.preventDefault();
     let newTodo = {
+        id: uuidv4(),
         text: e.target.elements.todoText.value,
         completed: false
     }
     todos.push(newTodo);
     saveTodos(todos);
-    generateSummaryDOM();
     renderTodos();
     e.target.elements.todoText.value = '';
 })

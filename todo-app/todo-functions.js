@@ -1,3 +1,5 @@
+
+
 // fetch existing todos from localStorage
 const getSavedTodos = function () {
     const todosJSON = localStorage.getItem('todos');
@@ -20,7 +22,7 @@ const renderTodos = function () {
         return todo.text.toLowerCase().includes(filter.searchFilter)
 
     })
-    
+
     const incompletedTodos = filteredTodos.filter(todo => {
         return !todo.completed;
     })
@@ -34,12 +36,25 @@ const renderTodos = function () {
     })
 }
 
-// get the DOM elements for an individual note
-const generateTodoDOM = function (todo) {
-    let p = document.createElement('p');
-    p.textContent = todo.text;
-    return p;
+// remve todo from list
+const removeTodo = function (id) {
+    const todoIndex = todos.findIndex(function(todo){
+        return todo.id === id
+    })
+    if(todoIndex > -1){
+        todos.splice(todoIndex, 1)
+    }
 }
+
+const toggleCheckbox = function(id) {
+    const todo = todos.find(function(todo){
+        return todo.id === id
+    })
+    if(todo != undefined){
+        todo.completed = !todo.completed;
+    }
+}
+
 
 // get the DOM elelemnts for list summary
 const generateSummaryDOM = function (incompletedTodos) {
@@ -47,3 +62,39 @@ const generateSummaryDOM = function (incompletedTodos) {
     summary.textContent = `You have ${incompletedTodos.length} todos left.`;
     return summary;
 }
+
+// get the DOM elements for an individual note
+const generateTodoDOM = function (todo) {
+    // div
+    let todoElem = document.createElement('div');
+    // checkbox
+    let todoCheckbox = document.createElement('input');
+    todoCheckbox.setAttribute('type', 'checkbox');
+    todoCheckbox.checked = todo.completed;
+    todoElem.appendChild(todoCheckbox);
+    todoCheckbox.addEventListener('change', function(){
+        toggleCheckbox(todo.id);
+        saveTodos(todos);
+        renderTodos();
+    })
+
+    // text
+    let todoText = document.createElement('span');
+    todoText.textContent = todo.text;
+    todoElem.appendChild(todoText);
+    // button 
+    let removeTodoButton = document.createElement('button');
+    removeTodoButton.textContent = 'x';
+    todoElem.appendChild(removeTodoButton);
+    removeTodoButton.addEventListener('click', function(){
+        removeTodo(todo.id);
+        console.log(todos)
+        saveTodos(todos);
+        renderTodos();
+    })
+
+    return todoElem;
+}
+
+
+
