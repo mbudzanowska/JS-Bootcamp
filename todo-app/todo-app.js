@@ -1,3 +1,5 @@
+"use strict";
+
 let todos = getSavedTodos();
 
 let filter = {
@@ -12,7 +14,7 @@ document.querySelector('#search-todo').addEventListener('input', event => {
     renderTodos();
 })
 
-document.querySelector('#new-todo').addEventListener('submit', function (e) {
+document.querySelector('#new-todo').addEventListener('submit', e => {
     e.preventDefault();
     let newTodo = {
         id: uuidv4(),
@@ -25,8 +27,8 @@ document.querySelector('#new-todo').addEventListener('submit', function (e) {
     e.target.elements.todoText.value = '';
 })
 
-document.querySelector('#toggleHide').addEventListener('change', function (e) {
-    filter.hideCompleted = e.target.checked;
+document.querySelector('#toggleHide').addEventListener('change', e => {
+    filter.hideCompleted =  !filter.hideCompleted;
     renderTodos();
 })
 

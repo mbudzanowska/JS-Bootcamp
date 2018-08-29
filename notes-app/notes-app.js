@@ -1,34 +1,41 @@
+"use strict";
+
 let notes = getSavedNotes();
 
 const filters = {
     searchText: '',
+    sortBy: 'lastEdited'
 }
 
 renderNotes(notes, filters);
 
-document.querySelector('#create-button').addEventListener('click', function(e) {
-    const id = uuidv4();
+document.querySelector('#create-button').addEventListener('click', (e) => {
+    const id = uuidv1();
+    const timestamp = moment().valueOf()
     notes.push({
         id: id,
         title: '',
-        body: ''
+        body: '',
+        createdAt: timestamp,
+        updatedAt: timestamp
     });
     saveNotes(notes);
     //renderNotes(notes, filters);
     location.assign(`/edit.html#${id}`);
 });
 
-document.querySelector('#search-text').addEventListener('input', function(e){
+document.querySelector('#search-text').addEventListener('input', (e) => {
     console.log(e.target.value)
     filters.searchText = e.target.value;
     renderNotes(notes, filters)
 })
 
-document.querySelector('#sortBy').addEventListener('change', function(e){
-    console.log(e.target.value)
+document.querySelector('#sortBy').addEventListener('change', (e) => {
+    filters.sortBy = e.target.value;
+    renderNotes(notes, filters);
 })
 
-window.addEventListener('storage', function(e){
+window.addEventListener('storage', (e) => {
     if(e.key === 'notes'){
         notes = JSON.parse(e.newValue)
         renderNotes(notes, filters);
