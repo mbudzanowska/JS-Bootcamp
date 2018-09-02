@@ -1,13 +1,51 @@
 const puzzleEl = document.querySelector('#puzzle')
 const guessesEl = document.querySelector('#guesses')
-const game1 = new Hangman('Cat', 2)
+const resetButton = document.querySelector('#reset')
+let game1
+const wordCount = 3;
 
-puzzleEl.textContent = game1.getPuzzle()
-guessesEl.textContent = game1.getStatusMessage()
-
-window.addEventListener('keypress', function(e) {
+window.addEventListener('keypress', e => {
     const guess = String.fromCharCode(e.charCode)
     game1.makeGuess(guess)
-    puzzleEl.textContent = game1.getPuzzle();
-    guessesEl.textContent = game1.getStatusMessage()
+    render()
 })
+
+const render = () => {
+    puzzleEl.textContent = game1.puzzle
+    guessesEl.textContent = game1.statusMessage
+}
+
+const startGame = async () => {
+    const puzzle = await getPuzzle(2)
+    game1 = new Hangman(puzzle, 5)
+    puzzleEl.textContent = game1.puzzle
+    render()
+}
+
+resetButton.addEventListener('click', () => startGame())
+startGame()
+
+getPuzzle(wordCount)
+  .then(data =>  console.log(data))
+  .catch(err =>  console.log(err));
+
+/* const countryCode = 'PL'
+
+getLocation()
+    .then(data => getCountry(data.country))
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+
+getCurrentCountry().then(data => console.log(data)) */
+/* fetch('http://puzzle.mead.io/puzzle', {}).then(response => {
+    if (response.status === 200) {
+        return response.json()
+    } else {
+        throw new Error('unable to fetch the puzzle')
+    }
+}).then((data) => {
+    console.log(data.puzzle);
+}).catch((err) => {
+    console.log(err);
+})
+ */
