@@ -2,29 +2,38 @@
 <html>
 
 <head>
-   
+    <title>Notes App</title>
+    <link rel="icon" href="/images/favicon.css">
+     <link rel="stylesheet" href="/styles/styles.css">
 </head>
 
 <body>
-    <h1>Notes App</h1>
-    <h2>Take notes and get shit done</h2>
-    <input id="search-text" placeholder="filter todos" type="text">
-
-    <hr>
-    <select name="sortBy" id="sortBy">
-        <option value="lastEdited">Sort by last edited</option>
-        <option value="recentlyCreated">Sort by recently created</option>
-        <option value="alphabetical">Sort alphabetically</option>
-    </select>
-    <div id="notes">
-        
+    <header class="header">
+        <div class="container">
+                <h1 class="header__title">Notes App</h1>
+                <h2 class="header__subtitle">Take notes and get shit done</h2>
+        </div>
+    </header>
+    <div class="actions">
+        <div class="actions__container">
+                <input class="input" id="search-text" placeholder="filter todos" type="text">
+                <hr>
+                <select class="dropdown" name="sortBy" id="sortBy">
+                    <option value="lastEdited">Sort by last edited</option>
+                    <option value="recentlyCreated">Sort by recently created</option>
+                    <option value="alphabetical">Sort alphabetically</option>
+                </select>
+        </div>
     </div>
-    <button id="create-button">Create Note</button>
-
-    <script src="http://wzrd.in/standalone/uuid%2Fv1@latest"></script>
+    <div class="container">
+            <div id="notes">
+                </div>
+                <button class="button" id="create-button">Create Note</button>
+    </div>
+    <script src="scripts/uuidv4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.min.js"></script>
-    <script src="notes-functions.js"></script>
-    <script src="notes-app.js"></script>
+    <script src="/scripts/notes-functions.js"></script>
+    <script src="/scripts/notes-app.js"></script>
 </body>
 
 </html>
